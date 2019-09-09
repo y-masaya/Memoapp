@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function App extends Eeact.Componet{
-  render(){
-    return(
+export default class App extends React.Componet {
+  render() {
+    return (
       <View style={styles.container}>
         <Text>Hello!</Text>
       </View>
