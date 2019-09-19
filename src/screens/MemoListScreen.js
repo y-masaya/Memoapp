@@ -6,15 +6,34 @@ import CircleButton from '../elements/CircleButton';
 
 
 class MemoListScreen extends React.Component {
-  handlePless() {
+  state = {
+    memoList: [],
+  }
+
+  componentWillMount() {
     const { currentUser } = firebase.auth();
-    this.props.navigation.navigate('MemoCreate', { currentUser: currentUser.uid });
+    firebase.firestore().collection(`users/${currentUser.uid}/memos`)
+      .get()
+      .then((snapshot) => {
+        const memoList = [];
+        snapshot.forEach((doc) => {
+          memoList.push(doc.data());
+        });
+        this.setState({ memoList });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  handlePless() {
+    this.props.navigation.navigate('MemoCreate');
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <MemoList navigation={this.props.navigation} />
+        <MemoList memoList={this.state.memoList} navigation={this.props.navigation} />
         <CircleButton name="plus" onPress={this.handlePless.bind(this)} />
       </View>
     );
