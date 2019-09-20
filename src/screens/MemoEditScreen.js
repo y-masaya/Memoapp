@@ -20,6 +20,7 @@ class MemoEditScreen extends React.Component {
   handlePress() {
     const { currentUser } = firebase.auth();
     const db = firebase.firestore();
+    console.log(this.state);
     db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key)
       .update({
         body: this.state.body,
@@ -27,7 +28,7 @@ class MemoEditScreen extends React.Component {
       .then(() => {
         console.log('success!');
       })
-      .error((error) => {
+      .catch((error) => {
         console.log(error);
       });
   }
