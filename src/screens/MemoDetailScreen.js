@@ -18,13 +18,17 @@ class MemoDetailScreen extends React.Component {
     this.setState({ memo: params.memo });
   }
 
+  returnMemo(memo) {
+    this.setState({ memo })
+  }
+
   render() {
     const { memo } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.memoHeader}>
           <View>
-            <Text style={styles.memoHeaderTitle}>{memo.body.substring(0,10)}</Text>
+            <Text style={styles.memoHeaderTitle}>{memo.body.substring(0, 10)}</Text>
             <Text style={styles.memoHeaderDate}>{dateString(memo.createtedOn)}</Text>
           </View>
         </View>
@@ -39,7 +43,7 @@ class MemoDetailScreen extends React.Component {
           name="pencil"
           color="white"
           style={styles.editButtom}
-          onPress={() => { this.props.navigation.navigate('MemoEdit', { memo }); }}
+          onPress={() => { this.props.navigation.navigate('MemoEdit', { ...memo, returnMemo: this.returnMemo.bind(this) }); }}
         />
       </View>
     );
